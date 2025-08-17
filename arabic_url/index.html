@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>رابط الموقع — اختصر روابطك بالعربية</title>
+  <meta name="description" content="اختصر روابطك بسرعة وسهل مع دعم كامل للعربية.">
+  <style>
+    body{font-family:system-ui, 'Noto Naskh Arabic', sans-serif; background:#f7fbfa;color:#072227}
+    .wrap{max-width:1000px;margin:26px auto;padding:18px}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    nav a{margin-left:12px;text-decoration:none;color:#066; padding:8px 12px;border-radius:8px}
+    .hero{background:#fff;padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.04)}
+    input,button{padding:12px;border-radius:10px;border:1px solid #e6eef0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div><strong>رابط الموقع</strong> — اختصار روابط بالعربية</div>
+      <nav>
+        <a href="/register.php">سجل الآن</a>
+        <a href="/login.php">دخول</a>
+        <a href="/admin">لوحة التحكم</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <h1>اختصر روابطك بالعربية بسهولة</h1>
+      <p>قصّر روابطك باللغة العربية وشاركها بأناقة. مثال: رابط.موقع/مقال</p>
+
+      <form id="f" onsubmit="return false" style="display:flex;gap:8px;margin-top:12px">
+        <input id="url" placeholder="https://..." style="flex:1">
+        <input id="custom" placeholder="مسمّى عربي (اختياري)" style="width:210px">
+        <button id="go">قصّر</button>
+      </form>
+      <div id="out" style="margin-top:12px;word-break:break-all"></div>
+
+      <section style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+        <div style="background:#fff;padding:12px;border-radius:10px">روابط قصيرة عربية — سهل وبسيط</div>
+        <div style="background:#fff;padding:12px;border-radius:10px">إحصائيات دقيقة — تتبع عدد النقرات وإحصائيات لكل رابط مختصر</div>
+        <div style="background:#fff;padding:12px;border-radius:10px">واجهة سهلة — صمّمناها لتكون واضحة ومريحة</div>
+      </section>
+    </main>
+  </div>
+
+<script>
+document.getElementById('go').addEventListener('click', async ()=>{
+  const url = document.getElementById('url').value.trim();
+  const custom = document.getElementById('custom').value.trim();
+  const res = await fetch('/api/shorten.php', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({url, custom})});
+  const j = await res.json();
+  document.getElementById('out').textContent = j.ok ? j.short_url : ('خطأ: ' + j.error);
+});
+</script>
+</body>
+</html>
