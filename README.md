@@ -1,0 +1,1 @@
+Arabic Shortener v4 — includes user registration (email + social placeholders), paid-members dashboard. Import api/schema.sql and configure api/config.php.
